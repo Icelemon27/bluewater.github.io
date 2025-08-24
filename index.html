@@ -456,10 +456,68 @@
         /* 限制容器最大宽度，并让其在大屏居中 */
         .step-screenshot { max-width: 640px; margin: 1rem 0; }
         /* 图片永远不超过容器且保持比例 */
-        .step-screenshot img { width: 100%; height: auto; display: block; }
+        .step-screenshot img { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .step-screenshot img:hover {
+            transform: scale(1.02);
+        }
+        
+        /* 全屏图片查看器样式 */
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            cursor: pointer;
+        }
+        
+        .fullscreen-image {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10000;
+            transition: color 0.3s ease;
+        }
+        
+        .close-button:hover {
+            color: #ccc;
+        }
+
+        .scrollmargin {
+        scroll-margin-top: 80px;
+        }
     </style>
 </head>
 <body>
+    <!-- 全屏图片查看器 -->
+    <div class="fullscreen-overlay" id="fullscreenOverlay">
+        <span class="close-button" id="closeButton">&times;</span>
+        <img class="fullscreen-image" id="fullscreenImage" src="" alt="">
+    </div>
     <header>
         <nav class="container">
             <div class="logo">JoySight</div>
@@ -540,7 +598,7 @@
         <section id="instructions" class="instructions">
             <div class="container">
                 <h2 class="section-title">使用说明</h2>
-                <p style="text-align: center; font-size: 1.1rem; margin-bottom: 2rem; color: #666;">下面的步骤详细地说明了如何使用bridge 软件进行分析</p>
+                <p style="text-align: center; font-size: 1.1rem; margin-bottom: 2rem; color: #666;">以下的说明使用了"模拟超市"的虚拟数据集来演示如何使用JoySight工具自动生成Bridge分析，并得到关键的驱动因素。</p>
                 <a href="assets/Test.xlsx" download>下载 Excel 示例</a>
                 <div class="step">
                     <span class="step-number">1</span>
@@ -560,11 +618,14 @@
 
                 <div class="step">
                     <span class="step-number">2</span>
-                    <strong id="error-header-validation">Data工作表</strong>
+                    <strong>Data工作表</strong>
                     <p>请在Data工作表的第二列开始输入数据类型，字段名，和数据。第一列为每一行的应输入数据的标识。</p>
-                    
+                    <figure class="step-screenshot">
+                        <img src="images/2_Data_Worksheet.png" alt="Data工作表">
+                    </figure>
+
                     <div class="sub-section">
-                        <div class="sub-title" id="error-header-validation" style="scroll-margin-top: 80px;">2.1 数据类型选择</div>
+                        <div class="sub-title scrollmargin" id="error-header-validation">2.1 数据类型选择</div>
                         <div class="sub-content">
                             <p>请在"Data"工作表的第一行生成的下拉菜单中，从B列开始，选择数据的类型，类型根据数据需要表示的含义而定。程序将根据数据的类型进行自动分析。</p>
                             
@@ -1087,6 +1148,49 @@
     </footer>
 
     <script>
+        // 图片点击放大功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const fullscreenOverlay = document.getElementById('fullscreenOverlay');
+            const fullscreenImage = document.getElementById('fullscreenImage');
+            const closeButton = document.getElementById('closeButton');
+            
+            // 为所有step-screenshot中的图片添加点击事件
+            const images = document.querySelectorAll('.step-screenshot img');
+            images.forEach(function(img) {
+                img.addEventListener('click', function() {
+                    fullscreenImage.src = this.src;
+                    fullscreenImage.alt = this.alt;
+                    fullscreenOverlay.style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; // 防止背景滚动
+                });
+            });
+            
+            // 关闭按钮点击事件
+            closeButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeFullscreen();
+            });
+            
+            // 点击背景关闭
+            fullscreenOverlay.addEventListener('click', function(e) {
+                if (e.target === fullscreenOverlay) {
+                    closeFullscreen();
+                }
+            });
+            
+            // ESC键关闭
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && fullscreenOverlay.style.display === 'flex') {
+                    closeFullscreen();
+                }
+            });
+            
+            function closeFullscreen() {
+                fullscreenOverlay.style.display = 'none';
+                document.body.style.overflow = 'auto'; // 恢复背景滚动
+            }
+        });
+
         function toggleExample(exampleId) {
             const example = document.getElementById(exampleId);
             const isVisible = example.classList.contains('show');
