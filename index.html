@@ -451,12 +451,18 @@
         html {
             scroll-behavior: smooth;
         }
+
+        /* 控制图片大小 */
+        /* 限制容器最大宽度，并让其在大屏居中 */
+        .step-screenshot { max-width: 640px; margin: 1rem 0; }
+        /* 图片永远不超过容器且保持比例 */
+        .step-screenshot img { width: 100%; height: auto; display: block; }
     </style>
 </head>
 <body>
     <header>
         <nav class="container">
-            <div class="logo">Bridge</div>
+            <div class="logo">JoySight</div>
             <ul class="nav-links">
                 <li><a href="#home">首页</a></li>
                 <li><a href="#problem">问题场景</a></li>
@@ -475,7 +481,7 @@
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <h1>Bridge – 在财务，市场，大数据等各种分析领域帮助你自动分析找到关键驱动因素</h1>
+                        <h1>JoySight – 在财务，市场，大数据等各种分析领域帮助你自动分析找到关键驱动因素</h1>
                         <p class="subtitle">几分钟内完成拆解，生成 Waterfall 与贡献分析，过程透明可追溯。</p>
                         <div class="cta-buttons">
                             <a href="#instructions" class="cta-button cta-primary">开始使用</a>
@@ -535,13 +541,20 @@
             <div class="container">
                 <h2 class="section-title">使用说明</h2>
                 <p style="text-align: center; font-size: 1.1rem; margin-bottom: 2rem; color: #666;">下面的步骤详细地说明了如何使用bridge 软件进行分析</p>
-                
+                <a href="assets/Test.xlsx" download>下载 Excel 示例</a>
                 <div class="step">
                     <span class="step-number">1</span>
                     <strong>初始面板操作</strong>
                     <p>初始面板上显示两个按钮"新建Bridge文件" 和"打开已有Bridge文件"</p>
+                    <figure class="step-screenshot">
+                        <img src="images/1.1_Initial_Panel.png" alt="点击新建Bridge文件后的界面截图">
+                        <!-- <figcaption>图 1. 点击“新建Bridge文件”后的界面效果示意</figcaption> -->
+                    </figure>
                     <div style="margin-left: 2rem; margin-top: 1rem;">
                         <p><strong>1.1</strong> 点击"新建Bridge文件"按钮 - 生成一个新的excel文件，其中包含一个新的"Data"工作表。请在"Data"工作表中输入相应的数据，并以此作为进一步的分析。</p>
+                    </div>
+                    <div style="margin-left: 2rem; margin-top: 1rem;">
+                        <p><strong>1.2</strong> 点击"打开已有Bridge文件"按钮 - 选择之前已经使用过的Excel文件。这个文件应该保存有相应的数据并设定好Data Type。</p>
                     </div>
                 </div>
 
