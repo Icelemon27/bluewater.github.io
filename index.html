@@ -271,14 +271,15 @@
         }
         
         .detail-title {
+            font-size: 1.1rem;
             font-weight: 600;
-            color: #555;
+            color: #333;
             margin-bottom: 0.5rem;
         }
         
         .detail-description {
             margin-left: 0;
-            color: #666;
+            color: #333;
             line-height: 1.6;
         }
         
@@ -454,7 +455,7 @@
 
         /* 控制图片大小 */
         /* 限制容器最大宽度，并让其在大屏居中 */
-        .step-screenshot { max-width: 640px; margin: 1rem 0; }
+        .step-screenshot { max-width: 1000px; margin: 1rem 0; }
         /* 图片永远不超过容器且保持比例 */
         .step-screenshot img { 
             width: 100%; 
@@ -466,6 +467,16 @@
         
         .step-screenshot img:hover {
             transform: scale(1.02);
+        }
+
+        /* 针对特定图片设置最大宽度 */
+        img.picture_max_width {
+        max-width: 600px;
+        }
+
+        /* 针对特定图片设置最大宽度 */
+        img.picture_max_width_400 {
+        max-width: 400px;
         }
         
         /* 全屏图片查看器样式 */
@@ -540,7 +551,7 @@
                 <div class="hero-content">
                     <div class="hero-text">
                         <h1>JoySight – 在财务，市场，大数据等各种分析领域帮助你自动分析找到关键驱动因素</h1>
-                        <p class="subtitle">几分钟内完成拆解，生成 Waterfall 与贡献分析，过程透明可追溯。</p>
+                        <p class="subtitle">几分钟内完成拆解，生成 Bridge 与贡献分析，过程透明可追溯。</p>
                         <div class="cta-buttons">
                             <a href="#instructions" class="cta-button cta-primary">开始使用</a>
                             <a href="#problem" class="cta-button cta-primary">案例介绍</a>
@@ -550,10 +561,10 @@
                         </div>
                     </div>
                     <div class="hero-preview">
-                        <div class="preview-title">Waterfall & Contribution 预览 / Preview</div>
+                        <div class="preview-title">Bridge & Contribution 预览 / Preview</div>
                         <div class="preview-placeholder">
                             <div style="font-size: 2rem; margin-bottom: 1rem;">📊</div>
-                            <div>Waterfall 图表预览区域</div>
+                            <div>Bridge 图表预览区域</div>
                         </div>
                         <div class="preview-note">上图为占位示意，可替换为你的截图或动态图。</div>
                     </div>
@@ -605,7 +616,7 @@
                     <strong>初始面板操作</strong>
                     <p>初始面板上显示两个按钮"新建Bridge文件" 和"打开已有Bridge文件"</p>
                     <figure class="step-screenshot">
-                        <img src="images/1.1_Initial_Panel.png" alt="点击新建Bridge文件后的界面截图">
+                        <img class="picture_max_width" src="images/1.1_Initial_Panel.png" alt="点击新建Bridge文件后的界面截图">
                         <!-- <figcaption>图 1. 点击“新建Bridge文件”后的界面效果示意</figcaption> -->
                     </figure>
                     <div style="margin-left: 2rem; margin-top: 1rem;">
@@ -618,20 +629,20 @@
 
                 <div class="step">
                     <span class="step-number">2</span>
-                    <strong>Data工作表</strong>
-                    <p>请在Data工作表的第二列开始输入数据类型，字段名，和数据。第一列为每一行的应输入数据的标识。</p>
+                    <strong class="sub-title scrollmargin" id="data-worksheet">Data工作表</strong>
+                    <p>请在Data工作表的B列开始，第一行输入<a href="#data-type-selection">数据类型</a>，第二行输入<a href="#file-name-input">字段名</a>，和第三行开始往下所有的行输入<a href="#data-input">数据</a>。A列为自动生成的第一行到第三行需要输入数据的标识说明，A列本身对数据和分析不产生影响。</p>
                     <figure class="step-screenshot">
                         <img src="images/2_Data_Worksheet.png" alt="Data工作表">
                     </figure>
 
                     <div class="sub-section">
-                        <div class="sub-title scrollmargin" id="error-header-validation">2.1 数据类型选择</div>
+                        <div class="sub-title scrollmargin" id="data-type-selection">2.1 数据类型选择</div>
                         <div class="sub-content">
                             <p>请在"Data"工作表的第一行生成的下拉菜单中，从B列开始，选择数据的类型，类型根据数据需要表示的含义而定。程序将根据数据的类型进行自动分析。</p>
                             
-                            <p>现在以我们的模拟超市的数据为例，讲解每种数据类型的含义：</p>
+                            <!-- <p>现在以我们的模拟超市的数据为例，讲解每种数据类型的含义：</p> -->
                             
-                            <button class="example-btn" onclick="toggleExample('dataset-example')">查看数据集创建案例</button>
+                            <!-- <button class="example-btn" onclick="toggleExample('dataset-example')">查看数据集创建案例</button>
                             <div id="dataset-example" class="example-content">
                                 <h4>模拟超市数据示例：</h4>
                                 <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
@@ -676,132 +687,185 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> -->
                             
-                            <p>数据的类型分为5种："Dimension","Key", "SumY","SumN","Result"。每一个字段需要定义一种数据类型。每种类型的定义如下：</p>
+                            <p>数据的类型分为5种： <a href="#dimension">Dimension</a>, <a href="#key">Key</a>, <a href="#sumy">SumY</a>, <a href="#sumn">SumN</a>, <a href="#result">Result</a>。每一个字段必须定义一种数据类型，可以使用下拉菜单选择数据类型。</p>
+                            <figure class="step-screenshot">
+                                <img src="images/2.1_Data_Type_Select.png" alt="Select Data Type">
+                            </figure>
+                            <p>现在以我们的模拟超市的数据为例，讲解每种数据类型的含义，每种类型的定义如下：</p>
                         </div>
                         
                         <div class="detail-item">
-                            <div class="detail-title">2.1.1 Dimension</div>
+                            <div class="detail-title scrollmargin" id="dimension">2.1.1 Dimension</div>
                             <div class="detail-description">
                                 表示数据的维度，例如日期，时间，区域等数据的维度和切面，这些字段不参与计算，只用来筛选数据。
                             </div>
+                            <figure class="step-screenshot">
+                                <img src="images/2.1.1_Dimension.png" alt="Select Data Type">
+                            </figure>
                         </div>
                         
                         <div class="detail-item">
-                            <div class="detail-title">2.1.2 Key</div>
+                            <div class="detail-title scrollmargin" id="key">2.1.2 Key</div>
                             <div class="detail-description">
                                 Key是Dimension的一种，只能有一个字段被标为Key。被标为Key的字段会作为分析的最小颗粒度，并在这个维度上计算每个因素对最终结果(Result)的影响。可以改变其他dimension 为Key 字段，进行不同颗粒度的分析。
                                 <br><br>
-                                <strong>例如：</strong>如果将区域选为Key，则Bridge工具将会计算每个变量在这个区域这个维度上的变化对最终结果(Result)的影响。
+                                <strong>例如：</strong>如果将"Prodect Name"选为Key，则Bridge工具将会计算每个变量在这个"Prodect Name"这个维度上的变化对最终结果(Result)的影响。
                             </div>
+                            <figure class="step-screenshot">
+                                <img src="images/2.1.2_Key.png" alt="Select Data Type">
+                            </figure>
                         </div>
                         
                         <div class="detail-item">
-                            <div class="detail-title">2.1.3 SumY</div>
+                            <div class="detail-title scrollmargin" id="sumy">2.1.3 SumY</div>
                             <div class="detail-description">
-                                可以加总变量并且有意义有同样含义的变量，程序将根据变量的变化计算出对最终结果(Result)的影响。
+                                同一列字段的数据不同行之间可以相加并且加总后的数据有意义。是否正确的设置SumY或者SumN将影响最终的分析结果。
                                 <br><br>
                                 <strong>例如：</strong>每一行不同产品的Quantity可以加总， 加总后含义为总商品的数量。因此Quantity的Type可以设置为SumY。
                                 <br><br>
-                                SumY中可以直接输入数值，也可以使用公式通过其他的字段计算出数值。但是公式中只能有Excel中使用的加减乘除四则运算符号以及括号，也就是：加+，减-，乘*，除/，左括号"("，右括号")"。
+                                SumY中可以直接输入数值，也可以使用公式通过其他的字段计算出数值。但是公式中只能使用Excel公式中的加减乘除四则运算符号以及括号，也就是：加+，减-，乘*，除/，左括号"("，右括号")"。<a href="#formula-usage-tips">公式使用注意事项</a>
                             </div>
+                            <figure class="step-screenshot">
+                                <img src="images/2.1.3_SumY.png" alt="Select Data Type">
+                            </figure>
                         </div>
                         
                         <div class="detail-item">
-                            <div class="detail-title">2.1.4 SumN</div>
+                            <div class="detail-title scrollmargin" id="sumn">2.1.4 SumN</div>
                             <div class="detail-description">
-                                Raw Data的一种，但是这类型的数据无法在不同的产品，区域等Key之间相加。例如，Price 是一个Non-additive数据，不同的产品的Price并不一样，如果要计算所有产品的平均Price，并不能直接将A产品的Price 加上B 产品的Price 直接得到整体的Price。
+                                同一列字段的数据不同行之间不可以相加，并且加总后的数据没有意义。是否正确的设置SumY或者SumN将影响最终的分析结果。
                                 <br><br>
-                                但是每一行不同产品的Price不可以加总，并不是平均价格或者加权平均价格，因此加总后的结果没有任何意义。因此Price 字段的Data Type应设为SumN。
+                                <strong>例如：</strong>不同的产品的Price并不一样，如果要计算所有产品的平均Price，并不能直接将A产品的Price 加上B 产品的Price从而直接得到整体的Price。因此Price的Type可以设置为SumN。
+                                <br><br>
+                                SumN中可以直接输入数值，也可以使用公式通过其他的字段计算出数值。但是公式中只能使用Excel公式中的加减乘除四则运算符号以及括号，也就是：加+，减-，乘*，除/，左括号"("，右括号")"。<a href="#formula-usage-tips">公式使用注意事项</a>
                             </div>
+                            <figure class="step-screenshot">
+                                <img src="images/2.1.4_SumN.png" alt="Select Data Type">
+                            </figure>
                         </div>
                         
                         <div class="detail-item">
-                            <div class="detail-title">2.1.5 Result</div>
+                            <div class="detail-title scrollmargin" id="result">2.1.5 Result</div>
                             <div class="detail-description">
                                 只能有一个字段被选择为Result作为我们需要分析的数据结果。Result这一列这里必须输入公式，通过其他的变量计算出Result字段。
                                 <br><br>
                                 <strong>例如：</strong>如果Result字段的内容是sales，那么单元格需要输入 = Price * Quantity。或者是margin%，那么单元格需要输入=profit / revenue。
                                 <br><br>
-                                Result里的公式是Bridge工具用来关联变量及结果，以及分析逻辑依赖的重要信息。请确保在每一行的Result单元格中都含有可以计算出Result的公式，公式应该简洁清晰。
+                                Result里的公式是Bridge工具用来关联变量及结果，以及分析逻辑依赖的重要信息。请确保在每一行的Result单元格中都含有可以计算出Result的公式，公式应该简洁清晰。Result 会分析公式中每个变量对Result的影响，而不在公式中的变量则并不在分析范围内。Result 公式中至少应该有一个字段的Data Type 是 SumY，这样才能把不同行的数据进行汇总分析。
                                 <br><br>
-                                公式中只能有Excel中使用的加减乘除四则运算符号以及括号，也就是：加+，减-，乘*，除/，左括号"("，右括号")"。
+                                Result公式中只能使用Excel公式中的加减乘除四则运算符号以及括号，也就是：加+，减-，乘*，除/，左括号"("，右括号")"。<a href="#formula-usage-tips">公式使用注意事项</a>
                                 <br><br>
-                                <strong>注意：</strong>请注意，每一个Raw Data, Non-additive, Result单元格中的公式，只能使用同一行的其他变量，公式中不能包含跨行的数据。
+                                <strong class="scrollmargin" id="formula-usage-tips">公式使用注意事项：</strong>每一个SumY, SumN, Result单元格中的公式，只能使用同一共工作表中同一行的其他数据，公式中不能包含跨行的数据。公式中只能使用Excel公式中的加减乘除四则运算符号以及括号，也就是：加+，减-，乘*，除/，左括号"("，右括号")"。
                                 <br><br>
-                                Result 会分析公式中每个变量对Result的影响，而不在公式中的变量则并不在分析范围内。Result 公式中至少应该有一个字段的Data Type 是 SumY，这样才能把不同行的数据进行汇总分析。
                             </div>
+                            <figure class="step-screenshot">
+                                <img src="images/2.1.5_Result.png" alt="Select Data Type">
+                            </figure>
                         </div>
                     </div>
                     
                     <div class="sub-section">
-                        <div class="sub-title">2.2 字段名设置</div>
+                        <div class="sub-title scrollmargin" id="file-name-input">2.2 字段名设置</div>
                         <div class="sub-content">
-                            <p>在"Data"工作表的第二行输入字段名，第一行的Data Type需要根据字段的含义做相应的下拉选项的选择。</p>
+                            <p>在"Data"工作表的B列开始往右的第二行输入字段名，字段名所代表的数据的含义应该和第一行的<a href="#data-type-selection">数据类型</a>相对应。</p>
                         </div>
+                        <figure class="step-screenshot">
+                            <img src="images/2.2_Field_Name.png" alt="Select Data Type">
+                        </figure>
                     </div>
                     
                     <div class="sub-section">
-                        <div class="sub-title">2.3 数据输入</div>
+                        <div class="sub-title scrollmargin" id="data-input">2.3 数据输入</div>
                         <div class="sub-content">
-                            <p>在"Bridge Data"工作表的第三行开始，往下的所有行都输入具体的数据。</p>
+                            <p>在"Bridge Data"工作表的B列第三行开始往下输入具体的数据。</p>
                         </div>
                     </div>
+                    <figure class="step-screenshot">
+                        <img src="images/2.3_Data_Input.png" alt="Select Data Type">
+                    </figure>
                 </div>
                 
-                <div class="step" style="margin-top: 1rem;">
+                <!-- <div class="step" style="margin-top: 1rem;">
                     <div style="margin-left: 1rem;">
                         <p><strong>1.2</strong> 点击"选择已有Bridge文件". 在对话框中选中之前已经使用过的Excel文件。这个文件应该保存有相应的数据并设定好Data Type。</p>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="step">
                     <span class="step-number">3</span>
                     <strong>Bridge按钮操作</strong>
-                    <p>在面板上将会出现蓝色按钮"New Bridge"和"Refresh Bridge"。</p>
+                    <p>当点击“New Bridge File” 或者“Select Bridge File”打开文件后，在面板上将会出现蓝色按钮<a href="#new-bridge">New Bridge</a>和<a href="#refresh-bridge">Refresh Bridge</a>。</p>
+                    <figure class="step-screenshot">
+                        <img class="picture_max_width" src="images/3_Bridge_Button.png" alt="点击新建Bridge文件后的界面截图">
+                        <!-- <figcaption>图 1. 点击“新建Bridge文件”后的界面效果示意</figcaption> -->
+                    </figure>
                     <div style="margin-left: 1rem; margin-top: 1rem;">
-                        <p><strong>3.1</strong> "New Bridge"按钮，根据工作表Data的数据生成新的下拉菜单和Waterfall 工作表。(如原有工作表和waterfall，以及数据将会删除，将会出现提示）</p>
-                        
-                        <p><strong>3.2</strong> "Refresh Bridge"按钮 - 在1.1.1.1步骤中Key没有变化的情况下，通过筛选下拉菜单后，重新选择Base 和 Target数据集后，按下"Refresh Bridge"按钮，重新生成Waterfall 图表和Contribution Analysis分析。缺失数据或者工作表将会出现提示，建议运行New Bridge，重新生成新的Bridge。</p>
+                        <p><strong>3.1</strong> <a class="sub-title scrollmargin" id="new-bridge">New Bridge</a>按钮，根据工作表Data的数据生成新的<a href="#dropdown-menu">下拉菜单</a>和Bridge工作表等分析框架，以便之后对数据进行分析。（注意：原workbook中有相关工作表例如Bridge工作表和相应的数据将会被删除。）如果Data工作表的数据有任何变化，则必须先按下"New Bridge"按钮，生成新的分析框架后再：1.对新的Base和Target下拉菜单进行选择； 2. 按下"Refresh Bridge"按钮，重新生成需要的Bridge图表和Contribution Analysis分析。</p>
+                    </div>
+                    <div style="margin-left: 1rem; margin-top: 1rem;">                       
+                        <p><strong>3.2</strong> <a class="sub-title scrollmargin" id="refresh-bridge">Refresh Bridge</a>按钮 - 根据分析需要选择<a href="#base-dropdown-menu">Base</a> 和 <a href="#target-dropdown-menu">Target</a>下拉菜单中的选项后，按下"Refresh Bridge"按钮，生成需要的Bridge 图表和Contribution Analysis分析。缺失数据或者工作表将会出现提示，建议点击New Bridge，重新生成新的Bridge。</p>
                     </div>
                 </div>
 
                 <div class="step">
                     <span class="step-number">4</span>
-                    <strong>下拉菜单配置</strong>
-                    <p>下拉菜单将会分两个区域，Base 和 Target</p>
-                    <p>Base 和 Target下拉菜单中的字段，每个字段包含的选项完全一样。用户可以根据需要在下拉菜单中筛选那些选项作为base数据，那些选项作为Target的数据。</p>
+                    <strong class="sub-title scrollmargin" id="dropdown-menu">下拉菜单</strong>
+                    <p>下拉菜单将会分两个区域，<a href="#base-dropdown-menu">Base</a> 和 <a href="#target-dropdown-menu">Target</a></p>
+                    <p>Base 和 Target下拉菜单中的字段，每个字段包含的选项完全一样。用户可以根据需要在下拉菜单中筛选那些选项作为base数据，那些选项作为Target的数据,以此作为Bridge两端的对比和分析的数据。注意：当初始的时候，默认Base和Target下拉菜单中的字段是全选的，因此Base和Target得到的是完全一样的数据集，因此得到的是没有差异的Bridge。</p>
+                    <figure class="step-screenshot">
+                        <img class="picture_max_width" src="images/4_Dropdown_List.png" alt="Select Data Type">
+                    </figure>
                     <div style="margin-left: 1rem; margin-top: 1rem;">
-                        <p><strong>4.1</strong> Base下拉菜单 -选择分析比较的基础数据，例如我们经常将某些年份的数据作为比较的基础，则这里选择2023年</p>
-                        <p><strong>4.2</strong> Target下拉菜单 - 选择分析比较的目标数据，例如这里选择2024年作为我们感兴趣的年份和2023年进行对比。</p>
-                        <p>初始因为没有在Base 和 Target下拉菜单中重新筛选（默认所有字段都是全选），因此Base和Target得到的是完全一样的数据集，因此得到的是没有差异的waterfall。(如图）</p>
+                        <p><strong>4.1</strong> <a class="sub-title scrollmargin" id="base-dropdown-menu"></a>Base</a>下拉菜单 -选择分析比较的基础数据，例如我们经常将某些年份的数据作为比较的基础，则这里选择2023年</p>
+                        <figure class="step-screenshot">
+                            <img class="picture_max_width" src="images/4.1_Dropdown_List_Base.png" alt="Select Data Type">
+                        </figure>
+                        <p><strong>4.2</strong> <a class="sub-title scrollmargin" id="target-dropdown-menu"></a>Target</a>下拉菜单 - 选择分析比较的目标数据，例如这里选择2024年作为我们感兴趣的年份和2023年进行对比。</p>
+                        <figure class="step-screenshot">
+                            <img class="picture_max_width" src="images/4.2_Dropdown_List_Target.png" alt="Select Data Type">
+                        </figure>
                     </div>
                     
-                    <button class="example-btn" onclick="toggleExample('menu-example')">查看菜单配置示例</button>
+                    <!-- <button class="example-btn" onclick="toggleExample('menu-example')">查看菜单配置示例</button>
                     <div id="menu-example" class="example-content">
                         <p><strong>示例场景：</strong>比较2023年vs 2024年的销售表现</p>
                         <p><strong>Base设置：</strong>年份=2023, 区域=全部, 产品类型=全部</p>
                         <p><strong>Target设置：</strong>年份=2024, 区域=全部, 产品类型=全部</p>
                         <p>这样设置后，Bridge将分析从2023到2024年各个因素对销售变化的具体贡献。</p>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="step">
                     <span class="step-number">5</span>
-                    <strong>Waterfall 工作表是展示最终分析结果的工作表</strong>
+                    <strong>Bridge 工作表</strong>
+                    <p>Bridge 工作表是展示最终分析结果，包括Bridge图和Contribution Analysis表格的工作表</p>
+                    <figure class="step-screenshot">
+                        <img class="picture_max_width" src="images/5_Bridge_WorkSheet.png" alt="Select Data Type">
+                    </figure>
                     <div style="margin-left: 1rem; margin-top: 1rem;">
-                        <p><strong>5.1</strong> Waterfall 数据源 - 在左上角B3单元格开始，会出现字段名和数据，这是生成Waterfall图表使用的数据。</p>
-                        <p><strong>5.2</strong> Waterfall - 显示经过程序运行后分析得到的Waterfall，左边的蓝色柱子为Base，中间为每个变量贡献的影响，右边柱子为Target.</p>
-                        <p><strong>5.3</strong> Contribution Analysis 表格 - 在Waterfall 图像的正下方，将会显示Contribution Analysis表格，其中显示了对Key字段的每个Item，在不同的因素下对整体变化的贡献。</p>
-                        <p>通过5.2 的 Waterfall  和 5.3的Contribution Analysis表格，将能够很快地找到影响变化的最主要Key Item，以及变化的因素（成本？折扣？还是价格？）</p>
-                        <p>可以通过修改2.1中，选择哪个字段是Key，哪个字段是Result，来分析不同维度，不同的result数据。并且可以根据3下拉菜单来筛选那些数据为Base和Target，点击"Refresh Bridge"生成更新的waterfall</p>
+                        <p><strong>5.1</strong> Bridge 数据源 - 在左上角B3单元格开始，会出现字段名和数据，这是生成Bridge图表使用的数据。</p>
+                        <figure class="step-screenshot">
+                            <img class="picture_max_width_400" src="images/5.1_Bridge_DataSource.png" alt="Select Data Type">
+                        </figure>
+                        <p><strong class="sub-title scrollmargin" id="Bridge_Chart" >5.2</strong> Bridge图 - 显示经过程序运行后分析得到的Bridge，左边的蓝色柱子为Base，中间为每个变量贡献的影响，右边柱子Chart为Target.</p>
+                        <figure class="step-screenshot">
+                            <img class="picture_max_width" src="images/5.2_Bridge_Chart.png" alt="Select Data Type">
+                        </figure>
+                        <p><strong class="sub-title scrollmargin" id="Contribution_Analysis">5.3</strong> Contribution Analysis 表格 - 在Bridge 图像的正下方，将会显示Contribution Analysis表格，其中显示了对Key字段的每个Item，在不同的因素下对整体变化的贡献。</p>
+                        <figure class="step-screenshot">
+                            <img class="picture_max_width" src="images/5.3_Contribution Analysis_Table.png" alt="Select Data Type">
+                        </figure>
+                        <p>通过<a href="#Bridge_Chart">Bridge图</a> 和<a href="#Contribution_Analysis">Contribution Analysis表格</a>，将能够很快地找到影响变化的最主要Item（SKU），以及变化的因素（价格？成本？还是数量Mix？）</p>
+                        <br>
+                        <p>可以通过修改<a href="#data-type-selection">2.1 数据类型选择</a>中，选择哪个字段是Key，哪个字段是Result，来分析不同维度，不同的result数据。并且可以根据3下拉菜单来筛选那些数据为Base和Target，点击<a href="#refresh-bridge">Refresh Bridge</a>生成更新的Bridge图和Contribution Analysis表格，以便对实际业务情况进行分析，并提出改进的建议</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Data Types Section -->
+        <!-- Data Types Section
         <section id="data-types" class="instructions">
             <div class="container">
                 <h2 class="section-title">数据类型详解</h2>
@@ -868,14 +932,14 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <!-- Rules Section -->
         <section id="rules" class="instructions">
             <div class="container">
                 <h2 class="section-title">6.SumY 和 SumN 运算规则</h2>
                 
-                <p style="margin-bottom: 2rem;">在Data工作表的第一行Data Type中，数值被分为两种类型SumY 和 SumN (Link)，并在Result一列中含有公式并使用这些数据。为了对数据进行正确的分析，这里我们定义了一些关于SumY 和 SumN的运算规则：（举例）</p>
+                <p style="margin-bottom: 2rem;">在<a href="#data-worksheet">Data工作表</a>的第一行<a href="#data-type-selection">Data Type</a>中，数值被分为两种类型<a href="#sumy">SumY </a>和 <a href="#sumn">SumN</a>，并在<a href="#result">Result</a>一列中含有公式并使用这些数据。为了对数据进行正确的分析，这里我们定义了一些关于SumY 和 SumN的运算规则：</p>
                 
                 <div class="step">
                     <span class="step-number">6.1</span>
@@ -908,13 +972,13 @@
                     </div>
                 </div>
                 
-                <p style="margin: 2rem 0;">根据具体字段的设定（SumN或者SumY)，一下的计算结果将无法被分析并出现错误提示，请修改公式或者字段类型的设定。</p>
+                <!-- <p style="margin: 2rem 0;">根据具体字段的设定（SumN或者SumY)，以下的计算结果将无法被分析并出现错误提示，请修改公式或者字段类型的设定。</p> -->
                 
                 <div class="step">
                     <span class="step-number">6.4</span>
-                    <strong>公式中的注意事项</strong>
+                    <strong>如何使用公式中及注意事项</strong>
                     <div style="margin-left: 1rem; margin-top: 1rem;">
-                        <p><strong>6.4.1</strong> 在公式中，如果包含括号，则根据四则运算优先计算括号内的数据，结果作为值并运用上面的规则继续运算。（举例）</p>
+                        <p><strong>6.4.1</strong> 在公式中，如果包含括号，则根据四则运算优先计算括号内的数据，结果作为值并运用上面的规则继续运算。</p>
                         
                         <button class="example-btn" onclick="toggleExample('bracket-example')">查看括号运算示例</button>
                         <div id="bracket-example" class="example-content">
@@ -923,29 +987,29 @@
                             <p>第二步：SumY * SumN = SumY</p>
                             <p>最终结果类型：SumY</p>
                         </div>
+<!--                         
+                        <p><strong>6.4.2</strong> 每个人对字段的含义设定的SumY  和 SumN 可能有些不同，有可能导致运算的结果不符合预期，但是为了覆盖更广泛的使用场景，程序将使用上述的运算规则。</p>
                         
-                        <p><strong>6.4.2</strong> 每个人对字段的含义设定的SumY  和 SumN 可能有些不同，有可能导致运算的结果不符合预期，但是为了覆盖更广泛的使用场景，程序将使用上述的运算规则。（举例）</p>
-                        
-                        <button class="example-btn" onclick="toggleExample('setting-example')">查看字段设定示例</button>
+                        <button class="example-btn" onclick="toggleExample('setting-example')">查看字段Data Type示例</button>
                         <div id="setting-example" class="example-content">
                             <p><strong>场景：</strong>价格字段的不同理解</p>
                             <p><strong>理解A：</strong>价格设为SumN（不可加总）</p>
                             <p><strong>理解B：</strong>价格设为SumY（可加总的总价值）</p>
                             <p>程序会按照用户的设定执行相应的运算规则。</p>
                         </div>
-                        
-                        <p><strong>6.4.3</strong> 程序有时候会弹出错误提示，显示公式不符合和运算规则。请修改公式，以符合运算规则的要求。（举例）</p>
+                         -->
+                        <!-- <p><strong>6.4.2</strong> 程序有时候会弹出错误提示，显示公式不符合和运算规则。请修改公式，以符合运算规则的要求。</p>
                         
                         <button class="example-btn" onclick="toggleExample('error-example')">查看错误提示示例</button>
                         <div id="error-example" class="example-content">
                             <p><strong>错误示例：</strong>Revenue = Cost(SumN) + Margin(SumN)</p>
                             <p><strong>错误原因：</strong>两个SumN类型不能直接相加</p>
                             <p><strong>解决方案：</strong>将Cost或Margin改为SumY类型，或修改公式逻辑</p>
-                        </div>
+                        </div> -->
                         
-                        <p><strong>6.4.4</strong> 请使用简单清晰的公式，尽量少使用括号，这样将更容易进行分析。</p>
+                        <!-- <p><strong>6.4.3</strong> 请使用简单清晰的公式，尽量少使用括号，这样将更容易进行分析。</p> -->
                         
-                        <p><strong>6.4.5</strong> 如果Result一列得公式中引用了其他得单元格，而这个单元格也包含公式，则分析将会把所有引用嵌套的公式合并到一个公式中进行分析。(举例）</p>
+                        <p><strong>6.4.2</strong> 如果Result一列得公式中引用了其他得单元格，而这个单元格也包含公式，则分析将会把所有引用嵌套的公式合并到一个公式中进行分析。</p>
                         
                         <button class="example-btn" onclick="toggleExample('nested-example')">查看嵌套公式示例</button>
                         <div id="nested-example" class="example-content">
@@ -955,24 +1019,24 @@
                             <p><strong>合并后：</strong>程序会分析 =D-(B*C)</p>
                         </div>
                         
-                        <p><strong>6.4.6</strong> 程序将会根据公式的结构，自动进行变量的重新排序和使用乘法分配律，这样是为了更好的进行数据的分析。（举例）</p>
+                        <p><strong>6.4.3</strong> 程序将会根据公式的结构，自动进行变量的重新排序和使用乘法分配律，这样是为了更好的进行数据的分析。</p>
                         
                         <button class="example-btn" onclick="toggleExample('reorder-example')">查看变量排序示例</button>
                         <div id="reorder-example" class="example-content">
-                            <p><strong>原始公式：</strong> =C*B+D*B</p>
-                            <p><strong>程序处理后：</strong> =B*(C+D)</p>
-                            <p>这样有助于更清晰地分析B、C、D各自的贡献。</p>
+                            <p><strong>原始公式：</strong> =SumY*(SumN1 + SumN2)</p>
+                            <p><strong>程序处理后：</strong> =SumY*SumN1 + SumY*SumN2</p>
+                            <p>这样有助于更清晰地分析SumY、SumN1、SumN2各自的贡献。</p>
                         </div>
                         
-                        <p><strong>6.4.7</strong> Waterfall图中每个factor出现的先后顺序原则上和Data工作表中factor从左到右的顺序一致，但是也有可能受到程序对公式中变量排序的影响。（举例）</p>
+                        <!-- <p><strong>6.4.6</strong> Bridge图中每个factor出现的先后顺序原则上和Data工作表中factor从左到右的顺序一致，但是也有可能受到程序对公式中变量排序的影响。</p>
                         
                         <button class="example-btn" onclick="toggleExample('order-example')">查看因素顺序示例</button>
                         <div id="order-example" class="example-content">
                             <p><strong>Data工作表顺序：</strong>Price, Quantity, Discount</p>
                             <p><strong>公式：</strong> =Price * Quantity * (1-Discount)</p>
-                            <p><strong>Waterfall顺序：</strong>可能为 Price → Quantity → Discount</p>
+                            <p><strong>Bridge顺序：</strong>可能为 Price → Quantity → Discount</p>
                             <p>顺序可能因公式结构优化而调整。</p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -983,9 +1047,9 @@
             <div class="container">
                 <h2 class="section-title">7. Process 工作表</h2>
                 
-                <p style="margin-bottom: 2rem;">Process工作表中包含了waterfall图表和数据产生的逻辑和算法，可以很直观的看到这些分析结果是如何一步一步计算出来的，避免了黑盒以及不能解释的现象。</p>
+                <p style="margin-bottom: 2rem;">Process工作表中包含了Bridge图表和数据产生的逻辑和算法，可以很直观的看到这些分析结果是如何一步一步计算出来的，避免了黑盒以及不能解释的现象。</p>
                 
-                <p style="margin-bottom: 1rem;"><strong>waterfall 分析计算逻辑和原理 (举例）</strong></p>
+                <p style="margin-bottom: 1rem;"><strong>Bridge 分析计算逻辑和原理</strong></p>
                 
                 <div class="step">
                     <span class="step-number">7.1</span>
@@ -1039,7 +1103,7 @@
                 <div class="step">
                     <span class="step-number">7.5</span>
                     <strong>Added Data 和 Removed Data</strong>
-                    <p>Added Data表示对于Base数据来说新加入的数据（在Target数据中存在）， Removed Data表示从Base数据中删除掉的数据（在Target中不存在）。这两类数据一般情况下需要先从其他factor的分析中剥离出来。(举例）</p>
+                    <p>Added Data表示对于Base数据来说新加入的数据（在Target数据中存在）， Removed Data表示从Base数据中删除掉的数据（在Target中不存在）。这两类数据一般情况下需要先从其他factor的分析中剥离出来。</p>
                     
                     <button class="example-btn" onclick="toggleExample('add-remove-example')">查看Added/Removed Data示例</button>
                     <div id="add-remove-example" class="example-content">
@@ -1064,13 +1128,13 @@
                 <p style="margin-bottom: 2rem;">所有的数据都只存在本地excel中，程序也只在本地运行，程序分析本身没有任何的网络通信</p>
                 
                 <h2 class="section-title">10. 透明可解释的分析</h2>
-                <p style="margin-bottom: 1rem;">拒绝AI分析的模糊结论和不可解释性，分析计算过程完全透明并可以解释(举例）</p>
+                <p style="margin-bottom: 1rem;">拒绝AI分析的模糊结论和不可解释性，分析计算过程完全透明并可以解释</p>
                 
                 <div class="feature-grid">
                     <div class="feature-card">
                         <div class="feature-icon">📊</div>
                         <h3>Process工作表透明度</h3>
-                        <p>包含waterfall图表和数据产生的逻辑和算法，每个计算步骤都可以追溯和验证。</p>
+                        <p>包含Bridge图表和数据产生的逻辑和算法，每个计算步骤都可以追溯和验证。</p>
                         
                         <button class="example-btn" onclick="toggleExample('transparency-example')">查看透明性对比</button>
                         <div id="transparency-example" class="example-content">
